@@ -1,24 +1,15 @@
 import React from 'react';
-import Partition from './components/Partition/Partition';
-import { generateRandomColor } from './hooks/useGenerateColor';
-import { usePartitions } from './hooks/usePartions';
+import Partition from './components/Partition';
+import { usePartitionStore } from './store/partitionStore';
 
 
 function App() {
 
-  const {partitions} = usePartitions();
-  console.log(partitions);
-
-  const color = generateRandomColor();
-  console.log(color);
+  const root = usePartitionStore((state) => state.root);
 
 
-  return <div className=''>
-    {
-      partitions.map((partition, index) => {
-        return <Partition key={index} partition={partition} />
-      })
-    }
+  return <div className='w-screen h-screen'>
+          <Partition partition={root} isRoot />
   </div>;
 }
 
