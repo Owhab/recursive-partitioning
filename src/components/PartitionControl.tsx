@@ -13,7 +13,7 @@ export const PartitionControls: React.FC<PartitionControlsProps> = ({
   onSplitVertical,
   onSplitHorizontal,
 }) => (
-  <div className="absolute top-2 right-2 flex gap-2 w-full h-full items-center justify-center">
+  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2">
     {!isRoot && (
       <button
         onClick={onRemove}
