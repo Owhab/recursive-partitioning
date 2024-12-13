@@ -51,35 +51,33 @@ const removePartitionRecursive = (partitions: PartitionType[], id: number): Part
 
 const splitPartitionRecursive = (partitions: PartitionType[], id: number, splitType: 'vertical' | 'horizontal'): PartitionType[] => {
     return partitions.map(partition => {
-        if (partition.id === id) {
-            return {
-                ...partition,
-                splitType,
-                children: [
-                    {
-                        id: Date.now(),
-                        name: `${partition.name} - Child 1`,
-                        color: generateRandomColor(),
-                        height: partition.height / 2,
-                        width: partition.width / 2,
-                        children: [],
-                    },
-                    {
-                        id: Date.now() + 1,
-                        name: `${partition.name} - Child 2`,
-                        color: generateRandomColor(),
-                        height: partition.height / 2,
-                        width: partition.width / 2,
-                        children: [],
-                    },
-                ],
-            };
-        } else if (partition.children.length > 0) {
-            return {
-                ...partition,
-                children: splitPartitionRecursive(partition.children, id, splitType),
-            };
-        }
-        return partition;
+      if (partition.id === id) {
+        return {
+          ...partition,
+          splitType,
+          children: [
+            {
+              id: Date.now(),
+              name: `${partition.name} - Child 1`,
+              color: partition.color, // Keep the original color for the first child
+              children: [],
+              splitType: splitType === 'vertical' ? 'horizontal' : 'vertical',
+            },
+            {
+              id: Date.now() + 1,
+              name: `${partition.name} - Child 2`,
+              color: generateRandomColor(), // Generate a completely new color for the second child
+              children: [],
+              splitType: splitType === 'vertical' ? 'horizontal' : 'vertical',
+            },
+          ],
+        };
+      } else if (partition.children.length > 0) {
+        return {
+          ...partition,
+          children: splitPartitionRecursive(partition.children, id, splitType),
+        };
+      }
+      return partition;
     });
-};
+  };

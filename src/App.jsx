@@ -12,8 +12,6 @@ function App() {
   const color = generateRandomColor();
   console.log(color);
 
-  const partions = usePartitions();
-  console.log(partions);
 
   return <div className=''>
     {
